@@ -1,6 +1,6 @@
 # Algorithm Lab — Course-Faithful Search Visualizer & Execution Engine
 
-An interactive, deterministic graph search algorithm visualizer and execution engine designed in strict accordance with the **IIT Madras AI: Search Methods for Problem Solving** curriculum.
+An interactive, deterministic graph search algorithm visualizer and execution engine designed in strict accordance with the **AI: Search Methods for Problem Solving** curriculum.
 
 ![Node.js](https://img.shields.io/badge/Node.js-20%2B-green.svg)
 ![Vue 3](https://img.shields.io/badge/Vue.js-3.5-42b883.svg)
@@ -49,8 +49,8 @@ An interactive, deterministic graph search algorithm visualizer and execution en
 
 ```bash
 # Clone the repository
-git clone https://github.com/<your-username>/algorithm-lab.git
-cd algorithm-lab
+git clone https://github.com/obticeo/AISMPS-search-algorithm-visualizer.git
+cd AISMPS-search-algorithm-visualizer
 
 # Install dependencies
 npm install
@@ -64,12 +64,6 @@ npm run dev
 
 Open the local development URL printed by Vite (typically `http://localhost:5173`).
 
-### Production Build
-
-```bash
-npm run build
-npm run preview
-```
 
 ---
 
