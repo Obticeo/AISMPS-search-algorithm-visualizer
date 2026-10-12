@@ -183,12 +183,12 @@ function nodeClass(node) {
 
     <!-- Legend -->
     <div class="legend">
-      <span><i class="dot current-dot"></i>Inspecting Node</span>
+      <span><i class="dot current-dot"></i>Current</span>
       <span><i class="dot open-dot"></i>OPEN</span>
-      <span><i class="dot closed-dot"></i>Visited (CLOSED)</span>
-      <span><i class="edge-dot current-edge-dot"></i>Inspecting Edge</span>
-      <span><i class="edge-dot visited-edge-dot"></i>Visited Edge</span>
-      <span><i class="edge-dot path-edge-dot"></i>Result Path</span>
+      <span><i class="dot closed-dot"></i>CLOSED</span>
+      <span><i class="edge-dot current-edge-dot"></i>Inspecting</span>
+      <span><i class="edge-dot visited-edge-dot"></i>Seen</span>
+      <span><i class="edge-dot path-edge-dot"></i>Solution</span>
     </div>
   </div>
 </template>
