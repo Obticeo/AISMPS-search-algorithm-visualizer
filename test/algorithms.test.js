@@ -87,8 +87,8 @@ test("invalid start node is rejected", () => {
   }), /Unknown start node/);
 });
 
-test("IITM 7-node search graph finds path to goal G with DFS and BFS", () => {
-  const g7 = defaultGraphs.find((g) => g.id === "iitm-7node");
+test("Practise 7-node search graph finds path to goal G with DFS and BFS", () => {
+  const g7 = defaultGraphs.find((g) => g.id === "practise-7node");
   assert.ok(g7);
   const dfsEx = createExecution({ algorithmId: "dfs", graph: g7, start: "S", goal: "G" });
   dfsEx.runToEnd();
@@ -103,8 +103,8 @@ test("IITM 7-node search graph finds path to goal G with DFS and BFS", () => {
   assert.equal(bfsEx.getState().result.at(-1), "G");
 });
 
-test("IITM Binary Search Tree finds depth-3 goal G with BFS and DFID-N", () => {
-  const tree = defaultGraphs.find((g) => g.id === "iitm-binary-tree");
+test("Practise Binary Search Tree finds depth-3 goal G with BFS and DFID-N", () => {
+  const tree = defaultGraphs.find((g) => g.id === "practise-binary-tree");
   assert.ok(tree);
   const bfsEx = createExecution({ algorithmId: "bfs", graph: tree, start: "S", goal: "G" });
   bfsEx.runToEnd();

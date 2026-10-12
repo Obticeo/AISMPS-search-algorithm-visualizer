@@ -31,8 +31,8 @@ An interactive, deterministic graph search algorithm visualizer and execution en
   - **DFID-C**: Depth-first iterative deepening filtering against OPEN and `[]` (reopening behavior)
 
 - **Included Graph Configurations**:
-  - **IITM 7-Node Search Graph**: Standard cyclic undirected graph with nodes `S, A, B, C, D, E, G`.
-  - **IITM Binary Search Tree**: Full 15-node binary search tree (depth 3, goal `G`).
+  - **Practise 7-Node Search Graph**: Standard cyclic undirected graph with nodes `S, A, B, C, D, E, G`.
+  - **Practise Binary Search Tree**: Full 15-node binary search tree (depth 3, goal `G`).
   - **Branching Graph**: Basic tree expansion test.
   - **Cycle Graph**: Demonstrating `RemoveSeen` and cycle handling.
   - **Unreachable Goal**: Demonstrating search termination on disconnected graphs.

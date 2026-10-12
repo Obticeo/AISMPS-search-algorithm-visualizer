@@ -16,8 +16,8 @@ export const defaultGraphs = [
     defaultGoal: "P"
   },
   {
-    id: "iitm-7node",
-    name: "IITM 7-Node Search Graph",
+    id: "practise-7node",
+    name: "Practise 7-Node Search Graph",
     description: "Undirected graph from IIT Madras lecture (S, A, B, C, D, E, G) with cycles and multiple paths.",
     nodes: ["S", "A", "B", "C", "D", "E", "G"],
     adjacency: {
@@ -42,8 +42,8 @@ export const defaultGraphs = [
     }
   },
   {
-    id: "iitm-binary-tree",
-    name: "IITM Binary Search Tree",
+    id: "practise-binary-tree",
+    name: "Practise Binary Search Tree",
     description: "Full 15-node binary search tree from IIT Madras lecture with goal G at depth 3.",
     nodes: ["S", "A", "B", "C", "D", "E", "F", "H", "I", "J", "K", "L", "M", "G", "N"],
     adjacency: {
