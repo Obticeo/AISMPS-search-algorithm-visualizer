@@ -441,6 +441,45 @@ button:disabled {
     font-size: 15px;
 }
 
+.speed-control {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 3px;
+    border: 1px solid var(--border-color, #ddd);
+    border-radius: 8px;
+    background: #203554;
+    border-color: #41597f;
+    color: #ffffff;
+
+}
+
+.speed-option {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    background: transparent;
+    color: #6fe3bc;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .2s, color .2s;
+}
+
+.speed-option:hover {
+    background: rgba(127, 127, 127, .12);
+}
+
+.speed-option.active {
+    background:#84ebc8;
+    color: var(--active-speed-color, #222) ;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .12);
+}
+
+.speed-option:focus-visible {
+    outline: 2px solid #6366f1;
+    outline-offset: 2px;
+}
 .timeline {
     height: 12px;
     background: #111e31;

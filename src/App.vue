@@ -336,18 +336,6 @@ scrollToActiveLine();
                     </div>
                 </div>
 
-                <div class="sidebar-field">
-                    <label for="speed-select">Speed</label>
-                    <select
-                        id="speed-select"
-                        v-model="speed"
-                        aria-label="Playback speed"
-                    >
-                        <option value="1500">Slow</option>
-                        <option value="850">Normal</option>
-                        <option value="350">Fast</option>
-                    </select>
-                </div>
 
                 <div class="sidebar-actions">
                     <button
@@ -664,6 +652,23 @@ scrollToActiveLine();
                                     }}</strong>
                                     of <strong>{{ events.length }}</strong>
                                 </span>
+                            </div>
+                            <div class="speed-control">
+                                <button
+                                    type="button"
+                                    v-for="option in [
+                                        { label: '.5×', value: 1500 },
+                                        { label: '1×', value: 850 },
+                                        { label: '2×', value: 350 }
+                                    ]"
+                                    :key="option.value"
+                                    class="speed-option"
+                                    :class="{ active: speed === option.value }"
+                                    :aria-pressed="speed === option.value"
+                                    @click="speed = option.value"
+                                >
+                                    {{ option.label }}
+                                </button>
                             </div>
                         </div>
 
