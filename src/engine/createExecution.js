@@ -1,12 +1,12 @@
 import { algorithms } from "../algorithms/index.js";
 import { validateGraph } from "./graph.js";
 
-export function createExecution({ algorithmId, graph, start, goal }) {
+export function createExecution({ algorithmId, graph, start, goal, ...rest }) {
   validateGraph(graph, start, goal);
   const runner = algorithms[algorithmId];
   if (!runner) throw new Error(`Unknown algorithm: ${algorithmId}`);
 
-  const events = runner({ graph, start, goal });
+  const events = runner({ graph, start, goal, ...rest });
   let cursor = 0;
 
   return {
