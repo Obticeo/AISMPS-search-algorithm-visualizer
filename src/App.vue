@@ -10,6 +10,8 @@ const algorithmId = ref("dfs");
 const graphId = ref("branching");
 const start = ref("K");
 const goal = ref("P");
+const beamWidth = ref(3);
+const isBeamSearch = computed(() => algorithmId.value === "beam-search");
 const cursor = ref(0);
 const events = ref([]);
 const state = ref(null);
@@ -132,6 +134,8 @@ function loadExecution() {
             graph: graph.value,
             start: start.value,
             goal: goal.value,
+            hFunction: (node) => hValues.value[node] ?? 0,
+            beamWidth: Number(beamWidth.value),
         });
         events.value = execution.getEvents();
         cursor.value = 0;
@@ -366,6 +370,11 @@ scrollToActiveLine();
                             </option>
                         </select>
                     </div>
+                </div>
+
+                <div v-if="isBeamSearch" class="sidebar-field">
+                    <label for="beamWidth">Beam Width (w)</label>
+                    <input id="beamWidth" type="number" v-model="beamWidth" min="1" max="100" />
                 </div>
 
                 <!-- Heuristic selector: only shown for grid-paper graphs -->
