@@ -19,6 +19,38 @@ const error = ref("");
 const sidebarOpen = ref(true);
 let timer = null;
 
+// --- Heuristic state (Step 2) ---
+// Only active when the selected graph has gridPositions.
+const heuristicFn = ref("manhattan"); // "manhattan" | "euclidean"
+
+/** True when the currently-selected graph supports grid-paper / heuristics. */
+const isGridGraph = computed(() =>
+    !!(graph.value.gridCols && graph.value.gridRows && graph.value.gridPositions)
+);
+
+/**
+ * h(N) for every node against the current goal node.
+ * Uses integer grid coordinates so values are always deterministic.
+ * The goal node always gets h = 0.
+ */
+const hValues = computed(() => {
+    if (!isGridGraph.value) return {};
+    const gp = graph.value.gridPositions;
+    const goalPos = gp[goal.value];
+    if (!goalPos) return {};
+    const { col: gc, row: gr } = goalPos;
+    const out = {};
+    for (const [node, { col, row }] of Object.entries(gp)) {
+        if (heuristicFn.value === "manhattan") {
+            out[node] = Math.abs(col - gc) + Math.abs(row - gr);
+        } else {
+            // Euclidean, rounded to 1 decimal for display
+            out[node] = Math.round(Math.sqrt((col - gc) ** 2 + (row - gr) ** 2) * 10) / 10;
+        }
+    }
+    return out;
+});
+
 function handleRun() {
     loadExecution();
     sidebarOpen.value = false;
@@ -336,6 +368,19 @@ scrollToActiveLine();
                     </div>
                 </div>
 
+                <!-- Heuristic selector: only shown for grid-paper graphs -->
+                <div v-if="isGridGraph" class="sidebar-field heuristic-field">
+                    <label>Heuristic h(N)</label>
+                    <div class="heuristic-toggle">
+                        <button type="button" class="heuristic-option" :class="{ active: heuristicFn === 'manhattan' }" @click="heuristicFn = 'manhattan'">Manhattan</button>
+                        <button type="button" class="heuristic-option" :class="{ active: heuristicFn === 'euclidean' }" @click="heuristicFn = 'euclidean'">Euclidean</button>
+                    </div>
+                    <p class="heuristic-note">
+                        <span v-if="heuristicFn === 'manhattan'">|Δcol| + |Δrow|</span>
+                        <span v-else>√(Δcol² + Δrow²)</span>
+                        &nbsp;&mdash; h(Goal) = 0
+                    </p>
+                </div>
 
                 <div class="sidebar-actions">
                     <button
@@ -500,6 +545,7 @@ scrollToActiveLine();
                         :state="state"
                         :events="events"
                         :cursor="cursor"
+                        :hValues="hValues"
                     />
 
                     <!-- Graph Controls (merged at the bottom under graph canvas) -->

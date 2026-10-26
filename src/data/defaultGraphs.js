@@ -1,5 +1,65 @@
 export const defaultGraphs = [
   {
+    id: "heuristic-19node",
+    name: "19-Node Heuristic Graph",
+    description: "Graph from Week-3 notes. Nodes have grid-paper coordinates for Manhattan / Euclidean heuristic computation.",
+    // Node order determines MoveGen order — preserve adjacency-list order.
+    nodes: ["S", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"],
+    adjacency: {
+      A: ["B", "C", "D", "F"],
+      B: ["A", "C", "D", "E", "H"],
+      C: ["A", "B", "E", "S"],
+      D: ["A", "B", "F", "H", "L"],
+      E: ["B", "C", "H", "J", "S"],
+      F: ["A", "D", "G", "L"],
+      G: ["F", "N"],
+      H: ["B", "D", "E", "J", "K"],
+      I: ["M", "R", "S"],
+      J: ["E", "H", "M"],
+      K: ["H", "L", "O"],
+      L: ["D", "F", "K", "O"],
+      M: ["I", "J", "P", "Q", "R", "S"],
+      N: ["G", "O"],
+      O: ["K", "L", "N"],
+      P: ["M", "Q"],
+      Q: ["M", "P", "R"],
+      R: ["I", "M", "Q"],
+      S: ["C", "E", "I", "M"]
+    },
+    defaultStart: "S",
+    defaultGoal: "G",
+    // ── Grid-paper coordinates ────────────────────────────────────────────
+    // Source coordinates are Cartesian (origin bottom-left, y-up).
+    // Converted to SVG grid (origin top-left, row = gridRows - y):
+    //   gridCols = 16  (max x = 16 at node I)
+    //   gridRows = 12  (max y = 12 at nodes A, C)
+    //   col = x,  row = 12 - y
+    gridCols: 16,
+    gridRows: 12,
+    gridPositions: {
+      A: { col:  4, row:  0 },   // [4,12]  → row = 12-12 = 0
+      B: { col:  8, row:  2 },   // [8,10]  → row = 12-10 = 2
+      C: { col: 11, row:  0 },   // [11,12] → row = 12-12 = 0
+      D: { col:  5, row:  3 },   // [5,9]   → row = 12-9  = 3
+      E: { col: 12, row:  4 },   // [12,8]  → row = 12-8  = 4
+      F: { col:  2, row:  4 },   // [2,8]   → row = 12-8  = 4
+      G: { col:  0, row:  9 },   // [0,3]   → row = 12-3  = 9  ← goal (flush left)
+      H: { col:  8, row:  5 },   // [8,7]   → row = 12-7  = 5
+      I: { col: 16, row:  9 },   // [16,3]  → row = 12-3  = 9  (flush right)
+      J: { col: 11, row:  7 },   // [11,5]  → row = 12-5  = 7
+      K: { col:  6, row:  7 },   // [6,5]   → row = 12-5  = 7
+      L: { col:  3, row:  7 },   // [3,5]   → row = 12-5  = 7
+      M: { col: 12, row:  9 },   // [12,3]  → row = 12-3  = 9
+      N: { col:  2, row: 11 },   // [2,1]   → row = 12-1  = 11
+      O: { col:  5, row: 10 },   // [5,2]   → row = 12-2  = 10
+      P: { col:  9, row: 10 },   // [9,2]   → row = 12-2  = 10
+      Q: { col: 11, row: 12 },   // [11,0]  → row = 12-0  = 12 (flush bottom)
+      R: { col: 15, row: 12 },   // [15,0]  → row = 12-0  = 12 (flush bottom)
+      S: { col: 15, row:  5 }    // [15,7]  → row = 12-7  = 5  ← start (flush right)
+    }
+  },
+
+  {
     id: "branching",
     name: "Branching graph",
     description: "Basic expansion and OPEN ordering.",

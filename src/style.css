@@ -1107,3 +1107,110 @@ button:disabled {
         scroll-behavior: auto !important;
     }
 }
+
+/* =========================================================
+   GRID-PAPER GRAPH CANVAS
+   Only active when isGridMode is true in GraphCanvas.vue.
+   All rules are scoped to .grid-paper / .grid-line /
+   .grid-border so they never touch non-grid graphs.
+   ========================================================= */
+
+/* Outer border of the grid area */
+.grid-border {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.18);
+    stroke-width: 1.5;
+}
+
+/* Interior dashed grid lines */
+.grid-line {
+    stroke: rgba(255, 255, 255, 0.10);
+    stroke-width: 1;
+    stroke-dasharray: 5 4;
+}
+
+/* Row / column coordinate numbers printed beside the grid */
+.grid-coord-label {
+    font: 500 8px "DM Mono", monospace;
+    fill: rgba(255, 255, 255, 0.22);
+    pointer-events: none;
+    user-select: none;
+}
+
+/* h-value badge rendered above each node in grid mode */
+.h-value-label {
+    font: 600 9px "DM Mono", monospace;
+    fill: #f6c467;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: 0.3px;
+}
+
+/* Legend dot for the h-value badge */
+.h-badge-dot {
+    display: inline-block;
+    width: 28px;
+    height: 10px;
+    border-radius: 3px;
+    background: transparent;
+    border: 1px solid #f6c467;
+    font: 600 7px "DM Mono", monospace;
+    color: #f6c467;
+    text-align: center;
+    line-height: 10px;
+    letter-spacing: 0.2px;
+}
+.h-badge-dot::after {
+    content: "h=?";
+}
+
+/* =========================================================
+   HEURISTIC SELECTOR (Step 2)
+   Only visible in the sidebar when a grid-paper graph is selected.
+   ========================================================= */
+
+.heuristic-field {
+    border-top: 1px solid rgba(82, 114, 158, 0.2);
+    padding-top: 14px;
+    margin-top: 4px;
+}
+
+.heuristic-toggle {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.heuristic-option {
+    flex: 1;
+    padding: 7px 0;
+    border-radius: 8px;
+    border: 1px solid rgba(82, 114, 158, 0.35);
+    background: rgba(23, 38, 60, 0.6);
+    color: #9ab0cc;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.16s ease;
+    letter-spacing: 0.2px;
+}
+
+.heuristic-option:hover {
+    border-color: rgba(111, 227, 188, 0.5);
+    color: #c8ffe9;
+    background: rgba(23, 38, 60, 0.9);
+}
+
+.heuristic-option.active {
+    background: rgba(111, 227, 188, 0.12);
+    border-color: #6fe3bc;
+    color: #6fe3bc;
+}
+
+.heuristic-note {
+    margin: 7px 0 0;
+    font-size: 11.5px;
+    color: rgba(154, 176, 204, 0.7);
+    font-family: "DM Mono", monospace;
+    line-height: 1.4;
+}
