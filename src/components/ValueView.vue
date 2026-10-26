@@ -9,6 +9,7 @@ function format(value) {
     if ("node" in value && "parent" in value) {
       const fields = [value.node, value.parent ?? "null"];
       if ("depth" in value) fields.push(value.depth);
+      if ("h" in value) fields.push(value.h);
       return `(${fields.join(", ")})`;
     }
     return JSON.stringify(value);
