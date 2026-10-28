@@ -109,10 +109,24 @@ function hLabel(node) {
   return v !== undefined ? `h=${v}` : null;
 }
 
+// ─── TSP Detection ────────────────────────────────────────────────────────
+const isTSP = computed(() => {
+  const vars = props.state.variables || {};
+  return Array.isArray(vars.tourEdges) || Array.isArray(vars.savingsList);
+});
+
 // ─── Edge state helpers (unchanged from original) ──────────────────────────
 const pathEdges = computed(() => {
   const set = new Set();
   const res = props.state.result;
+  if (isTSP.value && Array.isArray(res)) {
+    for (const edge of res) {
+      const parts = edge.split("->");
+      set.add(`${parts[0]}->${parts[1]}`);
+      set.add(`${parts[1]}->${parts[0]}`);
+    }
+    return set;
+  }
   if (Array.isArray(res) && res.length >= 2) {
     for (let i = 0; i < res.length - 1; i++) set.add(`${res[i]}->${res[i + 1]}`);
   }
@@ -120,6 +134,9 @@ const pathEdges = computed(() => {
 });
 
 const activeEdge = computed(() => {
+  if (isTSP.value) {
+    return props.state.variables?.evaluatingEdge || null;
+  }
   const pair = props.state.variables?.nodePair;
   if (pair && typeof pair === "object" && pair.parent && pair.node)
     return `${pair.parent}->${pair.node}`;
@@ -128,6 +145,15 @@ const activeEdge = computed(() => {
 
 const visitedEdges = computed(() => {
   const set = new Set();
+  if (isTSP.value) {
+    const edges = props.state.variables?.tourEdges || [];
+    for (const edge of edges) {
+      const parts = edge.split("->");
+      set.add(`${parts[0]}->${parts[1]}`);
+      set.add(`${parts[1]}->${parts[0]}`);
+    }
+    return set;
+  }
   const closed = props.state.variables?.CLOSED ?? [];
   if (Array.isArray(closed)) {
     for (const item of closed) {
@@ -140,9 +166,10 @@ const visitedEdges = computed(() => {
 
 function getEdgeStatus(from, to) {
   const key = `${from}->${to}`;
-  if (pathEdges.value.has(key))    return "path";
-  if (activeEdge.value === key)    return "current";
-  if (visitedEdges.value.has(key)) return "visited";
+  const revKey = `${to}->${from}`;
+  if (pathEdges.value.has(key) || (isTSP.value && pathEdges.value.has(revKey)))    return "path";
+  if (activeEdge.value === key || (isTSP.value && activeEdge.value === revKey))    return "current";
+  if (visitedEdges.value.has(key) || (isTSP.value && visitedEdges.value.has(revKey))) return "visited";
   return "default";
 }
 
@@ -154,6 +181,7 @@ const edges = computed(() => {
   for (const from of props.graph.nodes) {
     const neighbours = props.graph.adjacency[from] ?? [];
     for (const to of neighbours) {
+      if (isTSP.value && from > to) continue;
       const p1 = positions.value[from];
       const p2 = positions.value[to];
       if (!p1 || !p2) continue;
@@ -204,9 +232,16 @@ function nodeClass(node) {
   if (props.state.goal        === node) classes.push("goal");
   if (props.state.currentNode === node) classes.push("current");
   const vars = props.state.variables ?? {};
-  if ((vars.OPEN   ?? []).some((item) => (typeof item === "string" ? item : item.node) === node)) classes.push("open");
-  if ((vars.CLOSED ?? []).some((item) => (typeof item === "string" ? item : item.node) === node)) classes.push("closed");
-  if ((props.state.result ?? []).includes?.(node)) classes.push("path");
+
+  if (isTSP.value) {
+    if (vars.baseCity === node) classes.push("baseCity");
+    if (vars.currentCity === node) classes.push("current");
+    if ((props.state.result ?? []).join(",").includes(node)) classes.push("path");
+  } else {
+    if ((vars.OPEN   ?? []).some((item) => (typeof item === "string" ? item : item.node) === node)) classes.push("open");
+    if ((vars.CLOSED ?? []).some((item) => (typeof item === "string" ? item : item.node) === node)) classes.push("closed");
+    if ((props.state.result ?? []).includes?.(node)) classes.push("path");
+  }
   return classes.join(" ");
 }
 </script>
@@ -262,12 +297,12 @@ function nodeClass(node) {
 
       <!-- ═══ Graph Edges ══════════════════════════════════════════════════ -->
       <g class="edges">
-        <path
+                <path
           v-for="edge in edges"
           :key="edge.key"
           :d="edge.pathD"
-          :class="['graph-edge', `edge-${edge.status}`]"
-          :marker-end="`url(#arrow-${edge.status})`"
+          :class="['graph-edge', `edge-${edge.status}`, { 'tsp-hidden': isTSP && edge.status === 'default' }]"
+          :marker-end="isTSP ? null : `url(#arrow-${edge.status})`"
         />
       </g>
 
