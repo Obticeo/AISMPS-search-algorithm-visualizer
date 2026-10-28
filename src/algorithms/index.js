@@ -6,6 +6,9 @@ import { runDFIDN, runDFIDC } from "./dfid.js";
 import { runBestFirstSearch } from "./bestFirstSearch.js";
 import { runHillClimbing } from "./hillClimbing.js";
 import { runBeamSearch } from "./beamSearch.js";
+import { runTSPNearestNeighbour } from "./tspNearestNeighbour.js";
+import { runTSPGreedy } from "./tspGreedy.js";
+import { runTSPSavings } from "./tspSavings.js";
 
 export const algorithms = {
   "simple-search-1": runSimpleSearch1,
@@ -17,4 +20,7 @@ export const algorithms = {
   "best-first-search": runBestFirstSearch,
   "hill-climbing":     runHillClimbing,
   "beam-search":       runBeamSearch,
+  "tsp-nearest-neighbour": runTSPNearestNeighbour,
+  "tsp-greedy": runTSPGreedy,
+  "tsp-savings": runTSPSavings
 };
